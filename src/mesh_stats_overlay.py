@@ -2,9 +2,42 @@ import bpy
 import bpy_extras
 import blf
 
-from bpy.types import ThemePreferences
+from bpy.types import ThemePreferences, Operator, AddonPreferences
 from mathutils import Vector
 from bpy_extras import view3d_utils
+
+# =========================================================
+# Preferences
+# =========================================================
+
+class Mesh_stats_overlay_preferences(AddonPreferences):
+    bl_idname = __package__
+
+    font_size: bpy.props.IntProperty(
+        name='Font size',
+        default=12
+    )
+
+    font_color: bpy.props.FloatVectorProperty(
+        name='Font color',
+        default=(0.9, 0.9, 0.9),
+        min=0.0,
+        max=1.0,
+        precision = 2,
+        subtype='COLOR'
+    )
+
+    def draw(self, context):
+        layout = self.layout
+
+        layout.prop(self, 'font_size')
+        layout.prop(self, 'font_color')
+
+def register_preferences():
+    bpy.utils.register_class(Mesh_stats_overlay_preferences)
+    
+def unregister_preferences():
+    bpy.utils.unregister_class(Mesh_stats_overlay_preferences)
 
 # =========================================================
 # Overlay
@@ -31,14 +64,18 @@ def draw_text(location, text):
     coords_2d = view3d_utils.location_3d_to_region_2d(bpy.context.region, bpy.context.space_data.region_3d, location)
 
     font_id = 0
-    font_size = 12
+    font_size = bpy.context.preferences.addons[__package__].preferences.font_size
+    font_color = bpy.context.preferences.addons[__package__].preferences.font_color
 
     coords_2d[0] -= get_text_dimensions(text, font_size, font_id)[0] // 2
-    coords_2d[1] += get_text_dimensions(text, font_size, font_id)[1] // 2
+    coords_2d[1] += int(get_text_dimensions(text, font_size, font_id)[1] * 0.4)
 
     blf.position(font_id, coords_2d[0], coords_2d[1], 0.0)
     blf.size(font_id, font_size, 72)
-    blf.color(font_id, 0.9, 0.9, 0.9, 1.0)
+    blf.color(font_id, *font_color, 1.0)
+    #blf.enable(font_id, blf.SHADOW)
+    #blf.shadow(font_id, 5, 0.0, 0.0, 0.0, 1.0)
+    #blf.shadow_offset(font_id, 1, -1)
     blf.draw(font_id, text)
     
 def construct_overlay_text(obj):
@@ -185,9 +222,11 @@ def unregister_ui_callback():
 # =========================================================
 
 def register():
+    register_preferences()
     register_ui_callback()
     register_overlay_draw_handler()
 
 def unregister():
     unregister_overlay_draw_handler()
     unregister_ui_callback()
+    unregister_preferences()
