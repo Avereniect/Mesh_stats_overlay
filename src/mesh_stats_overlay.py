@@ -47,16 +47,6 @@ def get_text_dimensions(text, font_size, font_id):
     blf.size(font_id, font_size, 72)
     return blf.dimensions(font_id, text)
 
-def get_triangle_count(obj):
-    mesh = obj.data
-    polygon_count = len(mesh.polygons)
-    triangle_count = 0
-
-    for polygon in mesh.polygons:
-        triangle_count += len(polygon.loop_indices) - 2
-
-    return triangle_count
-
 def draw_text(location, text):
     if text is None:
         return
@@ -103,7 +93,7 @@ def construct_overlay_text(obj):
             tmp.append(str(len(obj.data.edges)))
 
         if t:
-            tmp.append(str(get_triangle_count(obj)))
+            tmp.append(str(len(obj.data.loop_triangles)))
 
         if f:
             tmp.append(str(len(obj.data.polygons)))
@@ -123,7 +113,7 @@ def construct_overlay_text(obj):
             tmp.append(str(len(obj_eval.data.edges)))
 
         if t:
-            tmp.append(str(get_triangle_count(obj_eval)))
+            tmp.append(str(len(obj_eval.data.loop_triangles)))
 
         if f:
             tmp.append(str(len(obj_eval.data.polygons)))
