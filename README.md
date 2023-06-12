@@ -10,8 +10,7 @@ The add-on support Blender 2.80. - 3.5.x
 The add-on's functionality is found from the 3D Viewport Overlay's menu in the
 Mesh statistics section.  
 
-## Settings
- 
+## Viewport Settings
 * **Unevaluated** - Shows mesh statistics for the raw mesh
 * **Evaluated** - Shows mesh statistics for the mesh with modifiers applied
 * **Selected Only** - Shows mesh statistics only for selected objects instead of
@@ -24,6 +23,12 @@ settings to be enabled.
 * **Edge count** - Display the number of edges in the mesh
 * **Triangle count** - Display the number of triangles in the mesh
 * **Face count** - Display the number of faces in the mesh
+
+## Add-on Preferences
+* **Font size** - Size of font used to draw overlays
+* **Font color** - Color of font used to draw overlays
+* **Enable suffixes** - Display a one-letter suffix after count overlays to
+  indicate which primitive the number corresponds to.
 
 ## Building
 Compress the src directory to a `.zip` file to build the add-on. The `pack.sh`
