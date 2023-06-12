@@ -27,11 +27,18 @@ class Mesh_stats_overlay_preferences(AddonPreferences):
         subtype='COLOR'
     )
 
+    enable_suffixes: bpy.props.BoolProperty(
+        name='Enable suffixes',
+        default=True,
+        description='Display a one-letter suffix (v, e, t, or f) after counts.'
+    )
+
     def draw(self, context):
         layout = self.layout
 
         layout.prop(self, 'font_size')
         layout.prop(self, 'font_color')
+        layout.prop(self, 'enable_suffixes')
 
 def register_preferences():
     bpy.utils.register_class(Mesh_stats_overlay_preferences)
@@ -83,20 +90,22 @@ def construct_overlay_text(obj):
     ret = []
 
     ctx = bpy.context
-    
+
+    suffixes_enabled = bpy.context.preferences.addons[__package__].preferences.enable_suffixes
+
     if U:
         tmp = []
         if v:
-            tmp.append(str(len(obj.data.vertices)))
+            tmp.append(str(len(obj.data.vertices)) + 'v' * suffixes_enabled)
 
         if e:
-            tmp.append(str(len(obj.data.edges)))
+            tmp.append(str(len(obj.data.edges)) + 'e' * suffixes_enabled)
 
         if t:
-            tmp.append(str(len(obj.data.loop_triangles)))
+            tmp.append(str(len(obj.data.loop_triangles)) + 't' * suffixes_enabled)
 
         if f:
-            tmp.append(str(len(obj.data.polygons)))
+            tmp.append(str(len(obj.data.polygons)) + 'f' * suffixes_enabled)
 
         ret.append(', '.join(tmp).rstrip(' '))
 
@@ -107,16 +116,16 @@ def construct_overlay_text(obj):
 
         tmp = []
         if v:
-            tmp.append(str(len(obj_eval.data.vertices)))
+            tmp.append(str(len(obj_eval.data.vertices)) + 'v' * suffixes_enabled)
 
         if e:
-            tmp.append(str(len(obj_eval.data.edges)))
+            tmp.append(str(len(obj_eval.data.edges)) + 'e' * suffixes_enabled)
 
         if t:
-            tmp.append(str(len(obj_eval.data.loop_triangles)))
+            tmp.append(str(len(obj_eval.data.loop_triangles)) + 't' * suffixes_enabled)
 
         if f:
-            tmp.append(str(len(obj_eval.data.polygons)))
+            tmp.append(str(len(obj_eval.data.polygons)) + 'f' * suffixes_enabled)
 
         ret.append(', '.join(tmp).rstrip(' '))
 
