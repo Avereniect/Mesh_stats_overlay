@@ -2,9 +2,9 @@
 This Blender add-on is meant to make it easy to check the number of vertices,
 edges, triangles, and/or faces that each individual object in your scene has.
 
-The add-on support Blender 2.80. - 3.6.x
+The add-on support Blender 2.80. - 4.0.x
 
-![The ](https://i.imgur.com/ApXsZT6.png)
+![Reference image](https://i.imgur.com/ApXsZT6.png)
 
 ## Usage
 The add-on's functionality is found from the 3D Viewport Overlay's menu in the

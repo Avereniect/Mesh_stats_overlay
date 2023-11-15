@@ -42,16 +42,46 @@ class Mesh_stats_overlay_preferences(AddonPreferences):
 
 def register_preferences():
     bpy.utils.register_class(Mesh_stats_overlay_preferences)
-    
+
 def unregister_preferences():
     bpy.utils.unregister_class(Mesh_stats_overlay_preferences)
 
 # =========================================================
-# Overlay
+# Memory Consumption Overlay
+# =========================================================
+
+def attribute_size():
+    # TODO: Implement
+    pass
+
+#def estimate_memory_usagse_as_vertex_array(mesh: bpy.types.Mesh):
+#    triangle_count = len(mesh.loop_triangles)
+#    vertex_count = len(mesh.vertices)
+#
+#    index_count = 3 *  triangle_count # 3 indices per triangle
+#    index_array_size = index_count * 4 # 4 bytes per 32-bit index
+#
+#    attribute_arrays_size = 0
+#
+#    for attrib in mesh.attributes:
+#        # TODO: Complete
+#        attribute_array_size = 
+#
+#        attribute_arrays_size +=
+#
+#    return index_array_size + attribute_arrays_size
+
+# =========================================================
+# Primitive Count Overlay
 # =========================================================
 
 def get_text_dimensions(text, font_size, font_id):
-    blf.size(font_id, font_size, 72)
+	if (bpy.app.version < (3, 4, 0)):
+    	blf.size(font_id, font_size, 72)
+	else:
+    	blf.size(font_id, font_size)
+	
+	
     return blf.dimensions(font_id, text)
 
 def draw_text(location, text):
@@ -68,7 +98,12 @@ def draw_text(location, text):
     coords_2d[1] += int(get_text_dimensions(text, font_size, font_id)[1] * 0.4)
 
     blf.position(font_id, coords_2d[0], coords_2d[1], 0.0)
-    blf.size(font_id, font_size, 72)
+
+	if (bpy.app.version < (3, 4, 0)):
+    	blf.size(font_id, font_size, 72)
+	else:
+    	blf.size(font_id, font_size)
+
     blf.color(font_id, *font_color, 1.0)
     #blf.enable(font_id, blf.SHADOW)
     #blf.shadow(font_id, 5, 0.0, 0.0, 0.0, 1.0)
@@ -229,3 +264,4 @@ def unregister():
     unregister_overlay_draw_handler()
     unregister_ui_callback()
     unregister_preferences()
+
