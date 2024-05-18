@@ -76,12 +76,12 @@ def attribute_size():
 # =========================================================
 
 def get_text_dimensions(text, font_size, font_id):
-	if (bpy.app.version < (3, 4, 0)):
-    	blf.size(font_id, font_size, 72)
-	else:
-    	blf.size(font_id, font_size)
-	
-	
+    if (bpy.app.version < (3, 4, 0)):
+        blf.size(font_id, font_size, 72)
+    else:
+        blf.size(font_id, font_size)
+
+
     return blf.dimensions(font_id, text)
 
 def draw_text(location, text):
@@ -99,10 +99,10 @@ def draw_text(location, text):
 
     blf.position(font_id, coords_2d[0], coords_2d[1], 0.0)
 
-	if (bpy.app.version < (3, 4, 0)):
-    	blf.size(font_id, font_size, 72)
-	else:
-    	blf.size(font_id, font_size)
+    if (bpy.app.version < (3, 4, 0)):
+        blf.size(font_id, font_size, 72)
+    else:
+        blf.size(font_id, font_size)
 
     blf.color(font_id, *font_color, 1.0)
     #blf.enable(font_id, blf.SHADOW)

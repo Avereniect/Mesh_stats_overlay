@@ -16,7 +16,7 @@ Mesh statistics section.
 * **Selected Only** - Shows mesh statistics only for selected objects instead of
   all objects  
 
-One of **Unevaluated** should be **Evaluated** enabled for the following
+One of **Unevaluated** or **Evaluated** should be enabled for the following
 settings to be enabled.
 
 * **Vertex count** - Display the number of vertices in the mesh
